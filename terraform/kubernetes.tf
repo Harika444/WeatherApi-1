@@ -19,3 +19,7 @@ provider "kubernetes" {
   cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
 }
 
+locals {
+  registry_server = "https://${data.terraform_remote_state.cluster.outputs.ecr_registry_id}.dkr.ecr.us-west-2.amazonaws.com"
+  image_name = "${data.terraform_remote_state.cluster.outputs.ecr_repository_url}:${var.latest}"
+}

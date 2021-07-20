@@ -7,7 +7,7 @@ resource "kubernetes_secret" "weatherapi" {
     ".dockerconfigjson" = <<DOCKER
 {
   "auths": {
-    "${var.registry_server}": {
+    "${local.registry_server}": {
       "auth": "${base64encode("${var.registry_username}:${var.registry_password}")}"
     }
   }
@@ -18,7 +18,7 @@ DOCKER
   type = "kubernetes.io/dockerconfigjson"
 }
 
-
+######################################################################################################
 
 resource "kubernetes_deployment" "weatherapi" {
   metadata {
@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "weatherapi" {
           name = kubernetes_secret.weatherapi.metadata.0.name
         }      
         container {
-          image = "921881026300.dkr.ecr.us-west-2.amazonaws.com/weatherapi:latest"          
+          image = "${local.image_name}"
           name  = "weatherapi"
 
           port {
@@ -58,6 +58,8 @@ resource "kubernetes_deployment" "weatherapi" {
     }
   }
 }
+
+######################################################################################################
 
 resource "kubernetes_service" "weatherapi" {
   metadata {

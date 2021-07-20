@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "weatherapi" {
           name = kubernetes_secret.weatherapi.metadata.0.name
         }      
         container {
-          image = "${local.image_name}"
+          image = local.image_name
           name  = "weatherapi"
 
           port {

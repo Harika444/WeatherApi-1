@@ -20,7 +20,8 @@ node
             sh label: '', script: '''                
             docker build -t 921881026300.dkr.ecr.us-west-2.amazonaws.com/weatherapi:latest .
             docker build -t 921881026300.dkr.ecr.us-west-2.amazonaws.com/weatherapi:$BUILD_NUMBER .            
-            '''                      
+            '''  
+            echo "Build Succcessful"                    
     }
     stage('Push the Docker image'){        
             sh label: '', script: '''                            

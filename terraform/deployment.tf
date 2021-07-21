@@ -27,7 +27,7 @@ resource "kubernetes_secret" "sql_server" {
   }
   data = {
     sql-root-username = base64decode("YWRtaW4K")
-    sql-root-password = "cGFzc3dvcmQK"
+    sql-root-password = base64decode("cGFzc3dvcmQK")
   }  
 }
 

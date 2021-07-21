@@ -15,6 +15,8 @@ namespace weatherapi
         public string User { get; set;}
 
         public string Topic { get; set;}
+
+        public string Password { get; set;}
         
     }
 }

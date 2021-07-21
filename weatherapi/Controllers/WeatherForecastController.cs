@@ -27,15 +27,17 @@ namespace weatherapi.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             var user = Environment.GetEnvironmentVariable("SQL_USERNAME");
+            var password = Environment.GetEnvironmentVariable("SQL_PASSWORD");
             var topic = Environment.GetEnvironmentVariable("TOPIC");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
+                TemperatureC = rng.Next(-20, 55),                
+                Summary = Summaries[rng.Next(Summaries.Length)],
                 User = user,
-                Topic = topic,
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                Password = password,
+                Topic = topic
                 
             })
             .ToArray();

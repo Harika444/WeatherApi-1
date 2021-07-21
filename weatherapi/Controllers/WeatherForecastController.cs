@@ -13,7 +13,7 @@ namespace weatherapi.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "cold", "humid", "sunny", "rainy", "xxx"
+            "cold", "humid", "sunny", "rainy"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -32,8 +32,9 @@ namespace weatherapi.Controllers
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)],
-                User = user
+                User = user,
+                Summary = Summaries[rng.Next(Summaries.Length)]
+                
             })
             .ToArray();
         }

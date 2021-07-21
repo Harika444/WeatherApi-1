@@ -36,7 +36,7 @@ node
         sh label: '', script: '''   
         cd terraform
         terraform init
-        echo "yes" | terraform plan                
+        echo "yes" | terraform plan -var="docker_build_tag=$BUILD_NUMBER"        
         '''          
      }  
      stage('Terraform Apply'){     
@@ -45,7 +45,7 @@ node
      }                   
         sh label: '', script: '''   
         cd terraform
-        echo "yes" | terraform apply
+        echo "yes" | terraform apply -var="docker_build_tag=$BUILD_NUMBER"
         '''          
      }               
   }

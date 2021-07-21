@@ -16,8 +16,8 @@ variable "registry_username" {
 variable "registry_password" {
   
 }
-variable "latest" {
-  default = "latest"
+variable "docker_build_tag" {
+  
   
 }
 

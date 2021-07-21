@@ -13,5 +13,8 @@ namespace weatherapi
         public string Summary { get; set; }
 
         public string User { get; set;}
+
+        public string Topic { get; set;}
+        
     }
 }

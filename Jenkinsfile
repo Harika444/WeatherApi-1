@@ -35,8 +35,9 @@ node
     stage('Terraform Plan'){                             
         sh label: '', script: '''   
         cd terraform
+        sed -i 's/btag/$BUILD_NUMBER/g' variables.tf
         terraform init
-        echo "yes" | terraform plan -var="docker_build_tag=$BUILD_NUMBER"        
+        echo "yes" | terraform plan 
         '''          
      }  
      stage('Terraform Apply'){     
@@ -45,7 +46,7 @@ node
      }                   
         sh label: '', script: '''   
         cd terraform
-        echo "yes" | terraform apply -var="docker_build_tag=$BUILD_NUMBER"
+        echo "yes" | terraform apply
         '''          
      }               
   }

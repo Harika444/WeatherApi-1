@@ -17,7 +17,6 @@ variable "registry_password" {
   
 }
 variable "docker_build_tag" {
-  
-  
+  default = "btag"  
 }
 

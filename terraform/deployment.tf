@@ -85,7 +85,7 @@ resource "kubernetes_deployment" "weatherapi" {
             value_from {
                 secret_key_ref {
                   name = kubernetes_secret.sql_server.metadata.0.name
-                  key = "kubernetes_secret.sql_server.data.0.sql-root-username"
+                  key = "sql-root-username"
                 }
             }
           }

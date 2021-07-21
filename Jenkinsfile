@@ -35,7 +35,7 @@ node
     stage('Terraform Plan'){                             
         sh label: '', script: '''   
         cd terraform
-        sed -i 's/btag/$BUILD_NUMBER/g' variables.tf
+        sed -i 's/btag/'$BUILD_NUMBER'/g' variables.tf
         terraform init
         echo "yes" | terraform plan 
         '''          

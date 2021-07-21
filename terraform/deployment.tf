@@ -1,4 +1,7 @@
-resource "kubernetes_secret" "weatherapi" {
+###################################################################################################
+################################### K8's SECRETS ##################################################
+###################################################################################################
+resource "kubernetes_secret" "docker" {
   metadata {
     name = "ecr-registry"
   }
@@ -18,7 +21,33 @@ DOCKER
   type = "kubernetes.io/dockerconfigjson"
 }
 
-######################################################################################################
+resource "kubernetes_secret" "sql_server" {
+  metadata {
+    name = "sql-secret"
+  }
+  data = {
+    sql-root-username = "YWRtaW4K"
+    sql-root-password = "cGFzc3dvcmQK"
+  }  
+}
+
+###################################################################################################
+################################### K8's CONFIGMAP ##############################################
+###################################################################################################
+
+resource "kubernetes_config_map" "weatherapi" {
+  metadata {
+    name = "weatherapi-confimap"
+  }
+  data = {
+    topic            = "example-topic"
+    event-type       = "example-event"  
+    db_url           = "url"
+  } 
+}
+###################################################################################################
+################################### K8's DEPLOYMENTS ##############################################
+###################################################################################################
 
 resource "kubernetes_deployment" "weatherapi" {
   metadata {
@@ -43,23 +72,68 @@ resource "kubernetes_deployment" "weatherapi" {
       }
       spec {
        image_pull_secrets {
-          name = kubernetes_secret.weatherapi.metadata.0.name
+          name = kubernetes_secret.docker.metadata.0.name
         }      
         container {
           image = local.image_name
           name  = "weatherapi"
-
           port {
             container_port = 80
           }
-
+          env {
+            name = "SQL_USERNAME"
+            value_from {
+                secret_key_ref {
+                  name = kubernetes_secret.sql_server.metadata.0.name
+                  key = "kubernetes_secret.sql_server.data.0.sql-root-username"
+                }
+            }
+          }
+          env {            
+            name = SQL_PASSWORD
+            value_from {
+                secret_key_ref {
+                  name = kubernetes_secret.sql_server.metadata.0.name
+                  key = kubernetes_secret.sql_server.data.0.sql-root-password
+                }
+            }
+          }
+          env {
+            name = SQL_DB_URL
+            value_from {
+                config_map_key_ref {
+                  name = kubernetes_config_map.weatherapi.metadata.0.name
+                  key = kubernetes_config_map.weatherapi.data.0.db_url
+                }
+            }
+          }
+          env {            
+            name = TOPIC
+            value_from {
+                config_map_key_ref {
+                  name = kubernetes_config_map.weatherapi.metadata.0.name
+                  key = "kubernetes_config_map.weatherapi.data.0.topic"
+                }
+            }
+          }
+          env {            
+            name = "EVENT_TYPE"
+            value_from {
+                config_map_key_ref {
+                  name = kubernetes_config_map.weatherapi.metadata.0.name
+                  key = "kubernetes_config_map.weatherapi.data.0.event-type"
+                }
+            }
+          }           
         }
       }
     }
   }
 }
 
-######################################################################################################
+###################################################################################################
+################################### K8's SERVICE ##################################################
+###################################################################################################
 
 resource "kubernetes_service" "weatherapi" {
   metadata {

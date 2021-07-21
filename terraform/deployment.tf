@@ -94,7 +94,7 @@ resource "kubernetes_deployment" "weatherapi" {
             value_from {
                 secret_key_ref {
                   name = kubernetes_secret.sql_server.metadata.0.name
-                  key = "kubernetes_secret.sql_server.data.0.sql-root-password"
+                  key = "sql-root-password"
                 }
             }
           }
@@ -103,7 +103,7 @@ resource "kubernetes_deployment" "weatherapi" {
             value_from {
                 config_map_key_ref {
                   name = kubernetes_config_map.weatherapi.metadata.0.name
-                  key = "kubernetes_config_map.weatherapi.data.0.db_url"
+                  key = "db_url"
                 }
             }
           }
@@ -112,7 +112,7 @@ resource "kubernetes_deployment" "weatherapi" {
             value_from {
                 config_map_key_ref {
                   name = kubernetes_config_map.weatherapi.metadata.0.name
-                  key = "kubernetes_config_map.weatherapi.data.0.topic"
+                  key = "topic"
                 }
             }
           }
@@ -121,7 +121,7 @@ resource "kubernetes_deployment" "weatherapi" {
             value_from {
                 config_map_key_ref {
                   name = kubernetes_config_map.weatherapi.metadata.0.name
-                  key = "kubernetes_config_map.weatherapi.data.0.event-type"
+                  key = "event-type"
                 }
             }
           }           

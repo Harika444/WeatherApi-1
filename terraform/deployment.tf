@@ -90,25 +90,25 @@ resource "kubernetes_deployment" "weatherapi" {
             }
           }
           env {            
-            name = SQL_PASSWORD
+            name = "SQL_PASSWORD"
             value_from {
                 secret_key_ref {
                   name = kubernetes_secret.sql_server.metadata.0.name
-                  key = kubernetes_secret.sql_server.data.0.sql-root-password
+                  key = "kubernetes_secret.sql_server.data.0.sql-root-password"
                 }
             }
           }
           env {
-            name = SQL_DB_URL
+            name = "SQL_DB_URL"
             value_from {
                 config_map_key_ref {
                   name = kubernetes_config_map.weatherapi.metadata.0.name
-                  key = kubernetes_config_map.weatherapi.data.0.db_url
+                  key = "kubernetes_config_map.weatherapi.data.0.db_url"
                 }
             }
           }
           env {            
-            name = TOPIC
+            name = "TOPIC"
             value_from {
                 config_map_key_ref {
                   name = kubernetes_config_map.weatherapi.metadata.0.name

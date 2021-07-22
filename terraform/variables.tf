@@ -20,3 +20,6 @@ variable "docker_build_tag" {
   default = "btag"  
 }
 
+variable "sql_password" {
+  
+}

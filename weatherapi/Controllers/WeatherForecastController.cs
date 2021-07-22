@@ -28,6 +28,7 @@ namespace weatherapi.Controllers
         {
             var user = Environment.GetEnvironmentVariable("SQL_USERNAME");
             var password = Environment.GetEnvironmentVariable("SQL_PASSWORD");
+            var db_url = Environment.GetEnvironmentVariable("SQL_DB_URL");
             var topic = Environment.GetEnvironmentVariable("TOPIC");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -37,6 +38,7 @@ namespace weatherapi.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)],
                 User = user,
                 Password = password,
+                DB_Url = db_url,
                 Topic = topic
                 
             })

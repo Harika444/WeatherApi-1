@@ -26,7 +26,7 @@ resource "kubernetes_secret" "sql_server" {
     name = "sql-secret"
   }
   data = {
-    sql-root-username = "${data.terraform_remote_state.cluster.outputs.db_instance_username}"
+    sql-root-username = "${data.terraform_remote_state.mssql.outputs.db_instance_username}"
     sql-root-password = "${var.sql_password}"
   }  
 }
@@ -42,7 +42,7 @@ resource "kubernetes_config_map" "weatherapi" {
   data = {
     topic            = "example-topic"
     event-type       = "example-event"  
-    db_url           = "${data.terraform_remote_state.cluster.outputs.db_instance_endpoint}"
+    db_url           = "${data.terraform_remote_state.mssql.outputs.db_instance_endpoint}"
   } 
 }
 ###################################################################################################

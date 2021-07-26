@@ -2,12 +2,18 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
+ARG TOKEN="default"
+RUN dotnet nuget add source https://daxeos-921881026300.d.codeartifact.us-west-2.amazonaws.com/nuget/sample/v3/index.json --name dev --password $TOKEN --username aws --store-password-in-clear-text
+
 # Copy csproj and restore
 COPY ./weatherapi/*.csproj ./
 RUN dotnet restore
 
+
 # Copy everything else and build
 COPY ./weatherapi ./
+RUN dotnet pack
+RUN dotnet nuget push bin/Debug/weatherapi.1.0.0.nupkg --source dev
 RUN dotnet publish -c Release -o out
 
 # Generate runtime image

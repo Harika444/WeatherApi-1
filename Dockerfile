@@ -14,7 +14,7 @@ RUN dotnet restore
 # Copy everything else and build
 COPY ./weatherapi ./
 RUN dotnet pack
-RUN dotnet nuget push bin/Debug/weatherapi.1.0.0.nupkg --source dev
+RUN dotnet nuget push bin/Debug/weatherapi.1.0.0.nupkg --source dev --skip-duplicate
 RUN dotnet publish -c Release -o out
 
 # Generate runtime image

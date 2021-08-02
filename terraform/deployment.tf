@@ -21,6 +21,7 @@ DOCKER
   type = "kubernetes.io/dockerconfigjson"
 }
 
+/*
 resource "kubernetes_secret" "sql_server" {
   metadata {
     name = "sql-secret"
@@ -30,6 +31,7 @@ resource "kubernetes_secret" "sql_server" {
     sql-root-password = "${var.sql_password}"
   }  
 }
+*/
 
 ###################################################################################################
 ################################### K8's CONFIGMAP ##############################################
@@ -42,7 +44,7 @@ resource "kubernetes_config_map" "weatherapi" {
   data = {
     topic            = "example-topic"
     event-type       = "example-event"  
-    db_url           = "${data.terraform_remote_state.mssql.outputs.db_instance_endpoint}"
+    #db_url           = "${data.terraform_remote_state.mssql.outputs.db_instance_endpoint}"
   } 
 }
 ###################################################################################################
@@ -80,6 +82,7 @@ resource "kubernetes_deployment" "weatherapi" {
           port {
             container_port = 80
           }
+          /*
           env {
             name = "SQL_USERNAME"
             value_from {
@@ -107,6 +110,7 @@ resource "kubernetes_deployment" "weatherapi" {
                 }
             }
           }
+          */
           env {            
             name = "TOPIC"
             value_from {

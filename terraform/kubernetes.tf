@@ -32,6 +32,18 @@ data "aws_eks_cluster_auth" "cluster" {
   name = data.terraform_remote_state.cluster.outputs.cluster_id
 }
 
+data "kubernetes_secret" "ecr-registry" {
+  metadata {
+    name = "ecr-registry"
+  }
+}
+data "kubernetes_secret" "sql-server" {
+  metadata {
+    name = "sql-secret"
+  }
+}
+
+
 provider "kubernetes" {
   host                   = data.terraform_remote_state.cluster.outputs.cluster_endpoint
   token                  = data.aws_eks_cluster_auth.cluster.token

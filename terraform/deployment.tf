@@ -1,6 +1,7 @@
 ###################################################################################################
 ################################### K8's SECRETS ##################################################
 ###################################################################################################
+/*
 resource "kubernetes_secret" "docker" {
   metadata {
     name = "ecr-registry"
@@ -30,7 +31,7 @@ resource "kubernetes_secret" "sql_server" {
     sql-root-password = "${var.sql_password}"
   }  
 }
-
+*/
 ###################################################################################################
 ################################### K8's CONFIGMAP ##############################################
 ###################################################################################################
@@ -72,19 +73,19 @@ resource "kubernetes_deployment" "weatherapi" {
       }
       spec {
        image_pull_secrets {
-          name = kubernetes_secret.docker.metadata.0.name
+          name = data.kubernetes_secret.ecr-registry.metadata.0.name
         }      
         container {
           image = local.image_name
           name  = "weatherapi"
           port {
             container_port = 80
-          }
+          }          
           env {
             name = "SQL_USERNAME"
             value_from {
                 secret_key_ref {
-                  name = kubernetes_secret.sql_server.metadata.0.name
+                  name = data.kubernetes_secret.sql-server.metadata.0.name
                   key = "sql-root-username"
                 }
             }
@@ -93,7 +94,7 @@ resource "kubernetes_deployment" "weatherapi" {
             name = "SQL_PASSWORD"
             value_from {
                 secret_key_ref {
-                  name = kubernetes_secret.sql_server.metadata.0.name
+                  name = data.kubernetes_secret.sql-server.metadata.0.name
                   key = "sql-root-password"
                 }
             }

@@ -20,13 +20,13 @@ namespace weatherapi
         {
             Configuration = configuration;
         }
-        readonly string MyAllowSpecificOrigin = "_myAllowSpecificOrigins";
+        //readonly string MyAllowSpecificOrigin = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {            
-            services.AddCors(options => {
+           /* services.AddCors(options => {
                 options.AddPolicy("_myAllowSpecificOrigins",
                 builder => builder
                 .AllowAnyOrigin()
@@ -34,6 +34,7 @@ namespace weatherapi
                 .AllowAnyHeader()                
                 );
             });
+            */
             services.AddControllers();                              
         }
 
@@ -45,7 +46,7 @@ namespace weatherapi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(MyAllowSpecificOrigin);
+            //app.UseCors(MyAllowSpecificOrigin);
             app.UseRouting();
 
             app.UseAuthorization();

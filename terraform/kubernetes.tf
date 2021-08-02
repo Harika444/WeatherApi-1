@@ -28,6 +28,18 @@ data "terraform_remote_state" "ecr" {
     }
   }
 }
+
+data "terraform_remote_state" "iam" {
+  backend = "remote"
+
+  config = {
+    organization = "Harika"
+    workspaces = {
+      name = "05-IAM"
+    }
+  }
+}
+
 data "aws_eks_cluster_auth" "cluster" {
   name = data.terraform_remote_state.cluster.outputs.cluster_id
 }

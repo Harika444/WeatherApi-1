@@ -4,7 +4,7 @@ data "terraform_remote_state" "cluster" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "my-CLUSTER"
+      name = "50-EKS"
     }
   }
 }
@@ -14,7 +14,7 @@ data "terraform_remote_state" "mssql" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "my-MSSQL"
+      name = "45-MSSQL"
     }
   }
 }
@@ -24,7 +24,7 @@ data "terraform_remote_state" "ecr" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "my-ECR"
+      name = "30-ECR"
     }
   }
 }
@@ -40,5 +40,5 @@ provider "kubernetes" {
 
 locals {
   registry_server = "https://${data.terraform_remote_state.ecr.outputs.ecr_registry_id}.dkr.ecr.us-west-2.amazonaws.com"
-  image_name = "${data.terraform_remote_state.ecr.outputs.ecr_repository_url}:${var.docker_build_tag}"
+  image_name = "${data.terraform_remote_state.ecr.outputs.ecr_repository_url}:${var.docker_build_tag}"  
 }

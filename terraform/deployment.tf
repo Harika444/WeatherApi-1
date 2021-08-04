@@ -74,7 +74,7 @@ resource "kubernetes_deployment" "weatherapi" {
       }
       spec {
        image_pull_secrets {
-          name = data.kubernetes_secret.ecr-registry.metadata.0.name
+          name = ecr-registry
         }      
         container {
           image = local.image_name

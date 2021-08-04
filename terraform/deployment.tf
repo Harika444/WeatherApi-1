@@ -152,7 +152,32 @@ resource "kubernetes_service" "weatherapi" {
       target_port = 80
     }
 
-    type = "LoadBalancer"
+    type = "NodePort"
+  }
+}
+
+resource "kubernetes_ingress" "weather_api_ingress" {
+  wait_for_load_balancer = true
+  metadata {
+    name = "example"
+    annotations = {
+      "kubernetes.io/ingress.class" = "alb"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+    }
+  }
+  spec {
+    rule {
+      http {
+        path {
+          path = "/"
+          backend {
+            service_name = weatherapi
+            service_port = 80
+          }          
+        }        
+      }
+    }
   }
 }
 

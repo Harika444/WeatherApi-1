@@ -173,7 +173,7 @@ resource "kubernetes_ingress" "weather_api_ingress" {
     rule {
       http {
         path {
-          path = "/*"
+          path = "/weatherforecast"
           backend {
             service_name = "weatherapi"
             service_port = 80

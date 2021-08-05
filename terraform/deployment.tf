@@ -152,7 +152,7 @@ resource "kubernetes_service" "weatherapi" {
       target_port = 80
     }
 
-    type = "NodePort"
+    type = "ClusterIP"
   }
 }
 

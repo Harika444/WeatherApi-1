@@ -39,6 +39,7 @@ resource "kubernetes_secret" "sql_server" {
 ###################################################################################################
 
 resource "kubernetes_config_map" "dev-weatherapi" {
+  count = var.namespace == "dev" ? 1 : 0
   metadata {    
     name = "${var.prefix}-${var.project}-dev-configmap-weatherapi"
     namespace = "dev"
@@ -50,6 +51,7 @@ resource "kubernetes_config_map" "dev-weatherapi" {
 }
 
 resource "kubernetes_config_map" "prod-weatherapi" {
+  count = var.namespace == "prod" ? 1 : 0
   metadata {    
     name = "${var.prefix}-${var.project}-prod-configmap-weatherapi"
     namespace = "prod"

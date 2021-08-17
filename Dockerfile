@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
 ARG TOKEN
-RUN dotnet nuget add source https://daxeos-921881026300.d.codeartifact.us-west-2.amazonaws.com/nuget/sample/v3/index.json --name dev --password $TOKEN --username aws --store-password-in-clear-text
+RUN dotnet nuget add source https://daxeos-921881026300.d.codeartifact.us-west-2.amazonaws.com/nuget/dax-coreinfra-dev-codeartifact-uswest2-daxeos/v3/index.json --name dev --password $TOKEN --username aws --store-password-in-clear-text
 
 # Copy csproj and restore
 COPY ./weatherapi/*.csproj ./

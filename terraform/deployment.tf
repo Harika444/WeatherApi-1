@@ -40,8 +40,8 @@ resource "kubernetes_secret" "sql_server" {
 
 resource "kubernetes_config_map" "weatherapi" {
   metadata {    
-    name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
-    namespace = "${var.namespace}"
+    name = "${var.prefix}-${var.project}-dev-configmap-weatherapi"
+    namespace = "dev"
   }
   data = {
     TOPIC            = "dev-topic"
@@ -51,8 +51,8 @@ resource "kubernetes_config_map" "weatherapi" {
 
 resource "kubernetes_config_map" "weatherapi" {
   metadata {    
-    name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
-    namespace = "${var.namespace}"
+    name = "${var.prefix}-${var.project}-prod-configmap-weatherapi"
+    namespace = "prod"
   }
   data = {
     TOPIC            = "prod-topic"

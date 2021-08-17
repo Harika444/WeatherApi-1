@@ -167,6 +167,7 @@ resource "kubernetes_ingress" "weather_api_ingress" {
   wait_for_load_balancer = true
   metadata {
     name = "dev-weatherapi"
+    namespace = "prod"
     annotations = {
       "kubernetes.io/ingress.class" = "prod-alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"

@@ -38,7 +38,7 @@ resource "kubernetes_secret" "sql_server" {
 ################################### K8's CONFIGMAP ##############################################
 ###################################################################################################
 
-resource "kubernetes_config_map" "weatherapi" {
+resource "kubernetes_config_map" "dev-weatherapi" {
   metadata {    
     name = "${var.prefix}-${var.project}-dev-configmap-weatherapi"
     namespace = "dev"
@@ -49,7 +49,7 @@ resource "kubernetes_config_map" "weatherapi" {
   } 
 }
 
-resource "kubernetes_config_map" "weatherapi" {
+resource "kubernetes_config_map" "prod-weatherapi" {
   metadata {    
     name = "${var.prefix}-${var.project}-prod-configmap-weatherapi"
     namespace = "prod"

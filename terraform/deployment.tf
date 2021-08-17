@@ -164,7 +164,7 @@ resource "kubernetes_ingress" "weather_api_ingress" {
   metadata {
     name = "dev-weatherapi"
     annotations = {
-      "kubernetes.io/ingress.class" = "alb"
+      "kubernetes.io/ingress.class" = "dev-alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "ip"
     }

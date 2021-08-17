@@ -4,8 +4,8 @@
 
 resource "kubernetes_secret" "docker" {
   metadata {
-    name = "ecr-registry"
-    namespace = "prod"
+    name = "${var.prefix}-${var.project}-${var.namespace}-secret-ecrregistry"
+    namespace = "${var.namespace}"
   }
 
   data = {
@@ -39,14 +39,24 @@ resource "kubernetes_secret" "sql_server" {
 ###################################################################################################
 
 resource "kubernetes_config_map" "weatherapi" {
-  metadata {
-    name = "weatherapi-confimap"
-    namespace = "prod"
+  metadata {    
+    name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
+    namespace = "${var.namespace}"
   }
   data = {
-    topic            = "example-topic"
-    event-type       = "example-event"  
-    #db_url           = "${data.terraform_remote_state.mssql.outputs.db_instance_endpoint}"
+    TOPIC            = "dev-topic"
+    EVENT_TYPE       = "dev-event"      
+  } 
+}
+
+resource "kubernetes_config_map" "weatherapi" {
+  metadata {    
+    name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
+    namespace = "${var.namespace}"
+  }
+  data = {
+    TOPIC            = "prod-topic"
+    EVENT_TYPE       = "prod-event"      
   } 
 }
 ###################################################################################################
@@ -55,11 +65,11 @@ resource "kubernetes_config_map" "weatherapi" {
 
 resource "kubernetes_deployment" "weatherapi" {
   metadata {
-    name = "weatherapi"
+    name = "${var.prefix}-${var.project}-${var.namespace}-deployment-weatherapi"
     labels = {
       App = "weatherapi"
     }
-    namespace = "prod"
+    namespace = "${var.namespace}"
   }
 
   spec {
@@ -77,43 +87,20 @@ resource "kubernetes_deployment" "weatherapi" {
       }
       spec {
        image_pull_secrets {
-          name = "ecr-registry"
+          name = "${var.prefix}-${var.project}-${var.namespace}-secret-ecrregistry"
         }      
         container {
           image = local.image_name
-          name  = "weatherapi"
+          name  = "${var.prefix}-${var.project}-${var.namespace}-pod-weatherapi"
           port {
             container_port = 80
           }
-          /*
-          env {
-            name = "SQL_USERNAME"
-            value_from {
-                secret_key_ref {
-                  name = data.kubernetes_secret.sql-server.metadata.0.name
-                  key = "sql-root-username"
-                }
+          env_from {
+            config_map_ref {
+              name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
             }
-          }
-          env {            
-            name = "SQL_PASSWORD"
-            value_from {
-                secret_key_ref {
-                  name = data.kubernetes_secret.sql-server.metadata.0.name
-                  key = "sql-root-password"
-                }
-            }
-          }
-          env {
-            name = "SQL_DB_URL"
-            value_from {
-                config_map_key_ref {
-                  name = kubernetes_config_map.weatherapi.metadata.0.name
-                  key = "db_url"
-                }
-            }
-          }
-          */
+          } 
+         /*         
           env {            
             name = "TOPIC"
             value_from {
@@ -131,7 +118,8 @@ resource "kubernetes_deployment" "weatherapi" {
                   key = "event-type"
                 }
             }
-          }           
+          }
+          */           
         }
       }
     }
@@ -144,8 +132,8 @@ resource "kubernetes_deployment" "weatherapi" {
 
 resource "kubernetes_service" "weatherapi" {
   metadata {
-    name = "weatherapi"
-    namespace = "prod"
+    name = "${var.prefix}-${var.project}-${var.namespace}-service-weatherapi"
+    namespace = "${var.namespace}"
   }
   spec {
     selector = {
@@ -166,9 +154,9 @@ resource "kubernetes_service" "weatherapi" {
 resource "kubernetes_ingress" "weather_api_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name = "dev-weatherapi"
+    name = "dev-weatherapi"    
     annotations = {
-      "kubernetes.io/ingress.class" = "prod-alb"
+      "kubernetes.io/ingress.class" = "alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "ip"
     }
@@ -179,7 +167,7 @@ resource "kubernetes_ingress" "weather_api_ingress" {
         path {
           path = "/weatherforecast"
           backend {
-            service_name = "weatherapi"
+            service_name = "${var.prefix}-${var.project}-${var.namespace}-service-weatherapi"
             service_port = 80
           }          
         }        

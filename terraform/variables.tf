@@ -13,3 +13,14 @@ variable "docker_build_tag" {
   default = "btag"  
 }
 
+variable "prefix" {
+  default = "dax"
+}
+
+variable "project" {
+  default = "coreinfra"
+}
+
+variable "namespace" {
+  default = "dev"
+}

@@ -40,8 +40,8 @@ resource "kubernetes_secret" "sql_server" {
 
 resource "kubernetes_config_map" "weatherapi" {
   metadata {    
-    name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
-    namespace = "${var.namespace}"
+    name = "${var.prefix}-${var.project}-dev-configmap-weatherapi"
+    namespace = "dev"
   }
   data = {
     TOPIC            = "dev-topic"
@@ -51,8 +51,8 @@ resource "kubernetes_config_map" "weatherapi" {
 
 resource "kubernetes_config_map" "weatherapi" {
   metadata {    
-    name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
-    namespace = "${var.namespace}"
+    name = "${var.prefix}-${var.project}-prod-configmap-weatherapi"
+    namespace = "prod"
   }
   data = {
     TOPIC            = "prod-topic"
@@ -154,7 +154,7 @@ resource "kubernetes_service" "weatherapi" {
 resource "kubernetes_ingress" "weather_api_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name = "dev-weatherapi"    
+    name = "${var.namespace}-weatherapi"    
     namespace = "${var.namespace}"
     annotations = {
       "kubernetes.io/ingress.class" = "alb"

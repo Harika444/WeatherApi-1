@@ -5,7 +5,7 @@ node
 	}
 	stage('Code Checkout')
 	{
-        git url: 'https://github.com/knagu/WeatherApi.git', branch: 'develop' 
+        git url: 'https://github.com/knagu/WeatherApi.git', branch: 'master' 
 	}	  
   //stage('Build Stage')
 	//{	   	  

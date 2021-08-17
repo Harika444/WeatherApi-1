@@ -4,7 +4,7 @@ data "terraform_remote_state" "cluster" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "50-EKS"
+      name = "dev-50-EKS"
     }
   }
 }
@@ -14,7 +14,7 @@ data "terraform_remote_state" "mssql" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "45-MSSQL"
+      name = "dev-45-MSSQL"
     }
   }
 }
@@ -24,7 +24,7 @@ data "terraform_remote_state" "ecr" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "30-ECR"
+      name = "dev-30-ECR"
     }
   }
 }
@@ -35,7 +35,7 @@ data "terraform_remote_state" "iam" {
   config = {
     organization = "Harika"
     workspaces = {
-      name = "05-IAM"
+      name = "dev-05-IAM"
     }
   }
 }

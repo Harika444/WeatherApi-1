@@ -162,7 +162,7 @@ resource "kubernetes_service" "weatherapi" {
 resource "kubernetes_ingress" "weather_api_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name = "example"
+    name = "dev-weatherapi"
     annotations = {
       "kubernetes.io/ingress.class" = "alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"

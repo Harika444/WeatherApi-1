@@ -3,7 +3,7 @@ terraform {
     organization = "Harika"
 
     workspaces {
-      name = "DEPLOYMENT"
+      name = "dev-DEPLOYMENT"
     }
   }
 }

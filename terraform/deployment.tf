@@ -5,6 +5,7 @@
 resource "kubernetes_secret" "docker" {
   metadata {
     name = "ecr-registry"
+    namespace = "prod"
   }
 
   data = {
@@ -40,6 +41,7 @@ resource "kubernetes_secret" "sql_server" {
 resource "kubernetes_config_map" "weatherapi" {
   metadata {
     name = "weatherapi-confimap"
+    namespace = "prod"
   }
   data = {
     topic            = "example-topic"
@@ -57,6 +59,7 @@ resource "kubernetes_deployment" "weatherapi" {
     labels = {
       App = "weatherapi"
     }
+    namespace = "prod"
   }
 
   spec {
@@ -142,6 +145,7 @@ resource "kubernetes_deployment" "weatherapi" {
 resource "kubernetes_service" "weatherapi" {
   metadata {
     name = "weatherapi"
+    namespace = "prod"
   }
   spec {
     selector = {
@@ -164,7 +168,7 @@ resource "kubernetes_ingress" "weather_api_ingress" {
   metadata {
     name = "dev-weatherapi"
     annotations = {
-      "kubernetes.io/ingress.class" = "dev-alb"
+      "kubernetes.io/ingress.class" = "prod-alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "ip"
     }

@@ -44,7 +44,7 @@ resource "kubernetes_config_map" "dev-weatherapi" {
     namespace = "dev"
   }
   data = {
-    TOPIC            = "dev-topic"
+    TOPIC            = "dev-topic-test"
     EVENT_TYPE       = "dev-event"      
   } 
 }

@@ -22,5 +22,5 @@ variable "project" {
 }
 
 variable "namespace" {
-  default = "prod"
+  default = "dev"
 }

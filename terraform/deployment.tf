@@ -102,7 +102,7 @@ resource "kubernetes_deployment" "weatherapi" {
               name = "${var.prefix}-${var.project}-${var.namespace}-configmap-weatherapi"
             }
           } 
-         /*         
+                 
           env {            
             name = "TOPIC"
             value_from {
@@ -121,7 +121,7 @@ resource "kubernetes_deployment" "weatherapi" {
                 }
             }
           }
-          */           
+                     
         }
       }
     }

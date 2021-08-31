@@ -5,7 +5,7 @@
 resource "kubernetes_secret" "docker" {
   metadata {
     name = "${var.prefix}-${var.project}-${var.namespace}-secret-ecrregistry"
-    namespace = "${var.namespace}"
+    #namespace = "${var.namespace}"
   }
 
   data = {
@@ -33,7 +33,7 @@ resource "kubernetes_secret" "sql_server" {
     sql-root-password = "${var.sql_password}"
   }  
 }
-*/
+
 ###################################################################################################
 ################################### K8's CONFIGMAP ##############################################
 ###################################################################################################
@@ -179,4 +179,4 @@ resource "kubernetes_ingress" "weather_api_ingress" {
   }
 }
 
-
+*/

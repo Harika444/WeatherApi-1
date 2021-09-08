@@ -52,7 +52,7 @@ node
 	//    echo "Build Successful"
   //  }             
     stage('Build'){        
-	    when(CHANGES != 'true') {
+	    when($CHANGES != 'true') {
         	echo 'Performing steps of stage Zero'
     		}
             sh label: '', script: '''                

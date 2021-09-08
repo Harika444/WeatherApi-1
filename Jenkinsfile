@@ -12,6 +12,8 @@ node
 	#!/bin/bash
 
 	DIR_PATH=terraform
+	GIT_PREVIOUS_COMMIT=$(git rev-parse --short "HEAD^")
+	GIT_COMMIT=$(git rev-parse --short HEAD)
 	if [ ! -d "$DIR_PATH" ]; then
     		echo "Directory '$DIR_PATH' not exists"
     		exit 1

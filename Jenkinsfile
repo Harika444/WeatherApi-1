@@ -35,7 +35,7 @@ node
 
 	if [ -z "$CHANGED" ]; then
     		echo "No changes dettected..."
-		exit 1
+		exit 0
 	else
     		echo "Directory changed"
 	fi

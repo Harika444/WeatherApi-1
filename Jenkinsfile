@@ -10,7 +10,7 @@ node
 	stage ('Checking') {
 	sh label: '', script: '''
 	#!/bin/bash
-
+	CHANGES=false
 	DIR_PATH=terraform
 	GIT_PREVIOUS_COMMIT=$(git rev-parse --short "HEAD^")
 	GIT_COMMIT=$(git rev-parse --short HEAD)
@@ -34,8 +34,8 @@ node
 	CHANGED=`git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT $DIR_PATH`
 
 	if [ -z "$CHANGED" ]; then
-    		echo "No changes dettected..."
-		exit 0
+    		CHANGES= true
+		echo "No changes dettected..."		
 	else
     		echo "Directory changed"
 	fi
@@ -52,6 +52,9 @@ node
 	//    echo "Build Successful"
   //  }             
     stage('Build'){        
+	    when(CHANGES != 'true') {
+        	echo 'Performing steps of stage Zero'
+    		}
             sh label: '', script: '''                
             auth_token=`aws codeartifact get-authorization-token --domain daxeos --query authorizationToken --output text --duration-seconds 900 --region us-west-2`
             docker build -t 921881026300.dkr.ecr.us-west-2.amazonaws.com/dax-coreinfra-dev-ecr-uswest2-weatherapi:latest --build-arg TOKEN=$auth_token .

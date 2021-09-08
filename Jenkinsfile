@@ -7,7 +7,7 @@ node
 	{
         git url: 'https://github.com/knagu/WeatherApi.git', branch: 'master' 
 	}	  
-  // stage('Build Stage')
+  //stage('Build Stage')
 	//{	   	  
   //      sh label: '', script: '''
   //      cd weatherapi

@@ -18,10 +18,7 @@ node
         //dotnet publish -c Release -o out'''
 	//    echo "Build Successful"
   //  }             
-    stage('Build'){        
-	    when($CHANGES != 'true') {
-        	echo 'Performing steps of stage Zero'
-    		}
+    stage('Build'){        	   
             sh label: '', script: '''                
             auth_token=`aws codeartifact get-authorization-token --domain daxeos --query authorizationToken --output text --duration-seconds 900 --region us-west-2`
             docker build -t 921881026300.dkr.ecr.us-west-2.amazonaws.com/dax-coreinfra-dev-ecr-uswest2-weatherapi:latest --build-arg TOKEN=$auth_token .

@@ -37,7 +37,7 @@ resource "kubernetes_secret" "sql_server" {
 ###################################################################################################
 ################################### K8's CONFIGMAP ##############################################
 ###################################################################################################
-
+/*
 resource "kubernetes_config_map" "dev-weatherapi" {
   count = var.namespace == "dev" ? 1 : 0
   metadata {    
@@ -61,7 +61,17 @@ resource "kubernetes_config_map" "prod-weatherapi" {
     EVENT_TYPE       = "prod-event"      
   } 
 }
-
+*/
+  resource "kubernetes_config_map" "weatherapi" {
+  metadata {
+    name = "${var.prefix}-${var.project}-prod-configmap-weatherapi"
+  }
+  data = {
+    topic            = "example-topic"
+    event-type       = "example-event"  
+    #db_url           = "${data.terraform_remote_state.mssql.outputs.db_instance_endpoint}"
+  } 
+}
 ###################################################################################################
 ################################### K8's DEPLOYMENTS ##############################################
 ###################################################################################################
@@ -72,7 +82,7 @@ resource "kubernetes_deployment" "weatherapi" {
     labels = {
       App = "weatherapi"
     }
-    namespace = "${var.namespace}"
+    #namespace = "${var.namespace}"
   }
 
   spec {
@@ -136,7 +146,7 @@ resource "kubernetes_deployment" "weatherapi" {
 resource "kubernetes_service" "weatherapi" {
   metadata {
     name = "${var.prefix}-${var.project}-${var.namespace}-service-weatherapi"
-    namespace = "${var.namespace}"
+    #namespace = "${var.namespace}"
   }
   spec {
     selector = {
@@ -158,7 +168,7 @@ resource "kubernetes_ingress" "weather_api_ingress" {
   wait_for_load_balancer = true
   metadata {
     name = "dev-weatherapi"    
-    namespace = "${var.namespace}"
+    #namespace = "${var.namespace}"
     annotations = {
       "kubernetes.io/ingress.class" = "alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"

@@ -21,6 +21,6 @@ variable "project" {
   default = "coreinfra"
 }
 
-#variable "namespace" {
-#  default = "dev"
-#}
+variable "namespace" {
+  default = "dev"
+}

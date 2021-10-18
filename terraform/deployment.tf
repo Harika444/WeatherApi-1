@@ -64,7 +64,7 @@ resource "kubernetes_config_map" "prod-weatherapi" {
 */
   resource "kubernetes_config_map" "weatherapi" {
   metadata {
-    name = "${var.prefix}-${var.project}-prod-configmap-weatherapi"
+    name = "${var.prefix}-${var.project}-dev-configmap-weatherapi"
   }
   data = {
     topic            = "example-topic"

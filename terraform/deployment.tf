@@ -201,7 +201,7 @@ resource "kubernetes_persistent_volume_claim" "pvc" {
   spec {
     access_modes = ["ReadWriteMany"]
     resources {
-      requests {
+      requests = {
         storage = "1Gi"
       }
     }

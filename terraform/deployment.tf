@@ -193,3 +193,21 @@ resource "kubernetes_ingress" "weather_api_ingress" {
   }
 }
 
+
+resource "kubernetes_persistent_volume_claim" "pvc" {
+  metadata {
+    name            = "terraform-example"
+  }
+  spec {
+    resources {
+      requests {
+        storage     = "1Gi"
+      }
+    }
+    access_modes    = ["ReadWriteOnce"]
+    volume_name     = "terraform-example"
+    storage_class_name = "gp2"
+  }
+  wait_until_bound = false
+  depends_on = ["kubernetes_persistent_volume.pv"]
+}

@@ -199,11 +199,6 @@ resource "kubernetes_persistent_volume_claim" "pvc" {
     name            = "terraform-example"
   }
   spec {
-    resources {
-      requests {
-        storage     = "1Gi"
-      }
-    }
     access_modes    = ["ReadWriteOnce"]
     volume_name     = "terraform-example"
     storage_class_name = "gp2"

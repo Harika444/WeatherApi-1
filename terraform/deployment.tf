@@ -208,6 +208,4 @@ resource "kubernetes_persistent_volume_claim" "pvc" {
     volume_name     = "terraform-example"
     storage_class_name = "gp2"
   }
-  wait_until_bound = false
-  depends_on = ["kubernetes_persistent_volume.pv"]
 }

@@ -104,12 +104,8 @@ resource "kubernetes_deployment" "weatherapi" {
         }
         volume {
           name = "terraform-example"
-          aws_elastic_block_store {
-            fs_type = "ext4"
-            volume_id = "vol-01888a4b44fe68155" 
-        }
-        persistent_volume_claim {
-          claim_name = "terraform-example"
+          persistent_volume_claim {
+            claim_name = "terraform-example"
          }
          
         }

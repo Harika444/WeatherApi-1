@@ -99,14 +99,19 @@ resource "kubernetes_deployment" "weatherapi" {
         }
       }
       spec {
-       image_pull_secrets {
+        image_pull_secrets {
           name = "${var.prefix}-${var.project}-${var.namespace}-secret-ecrregistry"
         }
-
+        volume {
+          name = "terraform-example"
+          aws_elastic_block_store {
+            fs_type = "ext4"
+        }
         persistent_volume_claim {
           claim_name = "terraform-example"
-          }
-
+         }
+         
+        }
         container {
           image = local.image_name
           name  = "${var.prefix}-${var.project}-${var.namespace}-pod-weatherapi"

@@ -101,7 +101,12 @@ resource "kubernetes_deployment" "weatherapi" {
       spec {
        image_pull_secrets {
           name = "${var.prefix}-${var.project}-${var.namespace}-secret-ecrregistry"
-        }      
+        }
+
+        persistent_volume_claim {
+          claim_name = "terraform-example"
+          }
+
         container {
           image = local.image_name
           name  = "${var.prefix}-${var.project}-${var.namespace}-pod-weatherapi"
